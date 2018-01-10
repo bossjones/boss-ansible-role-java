@@ -1,0 +1,4 @@
+---
+- hosts: allroles:
+    - role: boss-ansible-role-javabossjones__user: vagrant
+      bossjones__group: vagrant
