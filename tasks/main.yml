@@ -1,2 +1,31 @@
 ---
 # tasks file for bossjones.java
+
+- name: lookup architecture
+  set_fact: architecture="{{ ((ansible_architecture|truncate(3,true,'')) == 'arm') | ternary('ARM','X86') }}"
+
+- name: show architecture
+  debug: msg="architecture is set to {{ architecture }}"
+
+- name: Install add-apt-repository
+  apt:
+    name: "{{item}}"
+    state: latest
+  with_items: "{{boss__java_deps_packages}}"
+
+- name: Add Oracle Java Repository
+  apt_repository:
+    repo: 'ppa:webupd8team/java'
+
+- name: Accept Java 8 License
+  debconf:
+    name: 'oracle-java8-installer'
+    question: 'shared/accepted-oracle-license-v1-1'
+    value: 'true'
+    vtype: 'select'
+
+- name: Install Oracle Java 8
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items: "{{boss__java_oracle_packages}}"

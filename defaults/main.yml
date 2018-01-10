@@ -1,2 +1,19 @@
 ---
 # defaults file for bossjones.java
+
+boss__java_deps_packages:
+  - ca-certificates
+  - software-properties-common
+
+boss__java_oracle_packages:
+  - oracle-java8-installer
+  - oracle-java8-set-default
+
+boss__java_platform:
+  ARM:
+    ppa: ''
+  X68:
+    ppa: 'ppa:webupd8team/java'
+
+boss__java_install_oracle: True
+
